@@ -35,9 +35,14 @@
 const lots = ['大吉', '吉', '中吉', '末吉', '凶'];
 
 module.exports = (robot) => {
+	robot.hear(/hello>/i, (msg) => {
+        //正規表現[/hello>/i]にマッチした場合の処理
+        const user_id = msg.message.user.id;
+        msg.send(`hello, <@${user_id}>`);   // ← [']ではなく[`]。動かなかった
+    });
 	robot.hear(/おみくじ/i, (msg) => {
 		const username = msg.message.user.name;
 		const lot = lots[Math.floor(Math.random() * lots.length)];
-		msg.send(username + 'の運勢は' + lot + 'です。');
+		msg.send(`${username}の運勢は` + lot + 'です。');
 	});
 };
